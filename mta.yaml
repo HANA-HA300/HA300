@@ -1,3 +1,16 @@
 ID: GITDEMO
 _schema-version: '2.1'
 version: 0.0.1
+
+modules:
+ - name: GITHDB
+   type: hdb
+   path: GITHDB
+   requires:
+    - name: hdi_GITHDB
+
+resources:
+ - name: hdi_GITHDB
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CVC_SO_RANK" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Sales Order Rank"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="undefined::CVCS_PO">
+    <resourceUri>undefined::CVCS_PO</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="PRODUCTID"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute id="GROSSAMOUNT" aggregationType="sum"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="undefined::CVCS_PO"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="COUNTRY"/>
+      <order byViewAttributeName="GROSSAMOUNT" direction="DESC"/>
+      <rankThreshold>
+        <value>3</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="PRODUCTID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Product ID"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PRODUCTID"/>
+    </attribute>
+    <attribute id="COUNTRY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Country"/>
+      <keyMapping columnObjectName="Rank_1" columnName="COUNTRY"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="GROSSAMOUNT" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Gross Amount"/>
+      <measureMapping columnObjectName="Rank_1" columnName="GROSSAMOUNT"/>
+    </measure>
+    <measure id="Rank" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Rank"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Rank"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="216"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
